@@ -26,13 +26,18 @@ public class NoviceLScanner implements LScanner{
         sb.append(currentLine.charAt(0));
         truncLine(1);
         int nextQuotation=-1;
-        while ((nextQuotation = currentLine.indexOf('\"')) == -1) {
+        /*while ((nextQuotation = currentLine.indexOf('\"')) == -1) {
             sb.append(currentLine);
             sb.append(System.lineSeparator());
             readNextLine();
             if (currentLine.isEmpty()) {
                 LexemeScannerException.throwStringNotClose(new LexemeUnit(sb.toString(), lineCount, LexemeType.String));
             }
+        }*/
+        nextQuotation=currentLine.indexOf('\"');
+        if (nextQuotation==-1)
+        {
+            LexemeScannerException.throwStringNotClose(new LexemeUnit(sb.toString(), lineCount, LexemeType.String));
         }
         sb.append(currentLine, 0, nextQuotation+1);
         truncLine(nextQuotation+1);
