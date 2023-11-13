@@ -4,13 +4,11 @@ public class GeneralToken implements IToken{
     private final TokenType type;
     private final String content;
     private final int line;
-    private final int length;
 
-    public GeneralToken(TokenType type, String content, int line, int length) {
+    public GeneralToken(TokenType type, String content, int line) {
         this.type = type;
         this.content = content;
         this.line = line;
-        this.length = length;
     }
 
     @Override
@@ -30,7 +28,7 @@ public class GeneralToken implements IToken{
 
     @Override
     public int getLength() {
-        return length;
+        return content.length();
     }
 
 }

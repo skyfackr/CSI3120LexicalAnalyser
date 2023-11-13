@@ -4,8 +4,8 @@ public class SeparatorToken extends GeneralToken{
     private final Separator separator;
     private final Side side;
 
-    public SeparatorToken(TokenType type, String content, int line, int length, Separator separator, Side side) {
-        super(type, content, line, length);
+    public SeparatorToken(TokenType type, String content, int line, Separator separator, Side side) {
+        super(type, content, line);
         this.separator = separator;
         this.side = side;
     }

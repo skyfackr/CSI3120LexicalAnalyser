@@ -106,7 +106,7 @@ public class NoviceLScanner implements LScanner{
         int index=1;
         while(currentLine.charAt(index)!=' '&&getCharType(currentLine.charAt(index))==currentType)
         {
-            if (currentLine.charAt(index)==';')
+            if (";(){}[]".indexOf(currentLine.charAt(index))!=-1)
             {
                 break;
             }
@@ -131,6 +131,10 @@ public class NoviceLScanner implements LScanner{
         if (content.equals(";"))
         {
             return LScannerFactory.createLexemeUnit(content, lineCount, LexemeType.semicolon);
+        }
+        if ("(){}[]".indexOf(content)!=-1)
+        {
+            return LScannerFactory.createLexemeUnit(content, lineCount, LexemeType.separator);
         }
         return LScannerFactory.createLexemeUnit(content, lineCount, LexemeType.operator);
     }

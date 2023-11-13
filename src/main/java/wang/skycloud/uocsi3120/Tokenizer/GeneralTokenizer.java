@@ -2,32 +2,30 @@ package wang.skycloud.uocsi3120.Tokenizer;
 
 import wang.skycloud.uocsi3120.LexemeScanner.ILexeme;
 
-import java.util.HashSet;
-import java.util.Set;
+/**
+ * generate comment eof string semicolon operator
+ */
+public class GeneralTokenizer implements ITokenizer{
+    @Override
+    public IToken tokenize(ILexeme lexeme) {
+        switch (lexeme.getLexemeType())
+        {
+            case commentBlock:
+            case commentLine:
+                return new GeneralToken(TokenType.COMMENT,lexeme.getContent(),lexeme.getLine());
+            case EOF:
+                return new GeneralToken(TokenType.EOF,lexeme.getContent(),lexeme.getLine());
 
-public class GeneralTokenizer {
+            case String:
+                return new GeneralToken(TokenType.STRING,lexeme.getContent(),lexeme.getLine());
 
-    /**
-     * receive lexemes in one line. return tokens.
-     * when find a {@link wang.skycloud.uocsi3120.LexemeScanner.LexemeType#EOF} this will discard all lexemes left
-     *
-     * @param lexemes all lexemes in one line
-     * @return token list
-     */
-    public static IToken[] tokenize(ILexeme[] lexemes) {
-        identifierSet=new HashSet<>();
-        //TODO: tokenize not implemented created at 2023/11/13 12:55
-        throw new RuntimeException("tokenize not implemented");
-    }
-    private static Set<String> identifierSet;
-    private static boolean isFloat(String s) {
-        try {
-            Float.parseFloat(s);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
+            case semicolon:
+                return new GeneralToken(TokenType.SEMICOLON,lexeme.getContent(),lexeme.getLine());
+
+            case operator:
+                return new GeneralToken(TokenType.OPERATOR,lexeme.getContent(),lexeme.getLine());
+
         }
+        throw new RuntimeException("unreachable");
     }
-
-
 }

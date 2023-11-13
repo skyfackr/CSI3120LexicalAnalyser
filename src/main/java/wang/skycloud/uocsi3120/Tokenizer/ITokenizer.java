@@ -5,7 +5,6 @@ import wang.skycloud.uocsi3120.LexemeScanner.ILexeme;
 /**
  * interface of all tokenizers
  */
-@Deprecated
 public interface ITokenizer {
     /**
      * use this to tokenize a lexeme. must make sure the type is right
