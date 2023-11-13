@@ -58,9 +58,9 @@ public class TKFactory {
         while(iterator.hasNext())
         {
             now=iterator.next();
-            if (now.getLexemeType()==LexemeType.literal)
+            if (now.getLexemeType()==LexemeType.operator)
             {
-                if (now.getContent().contentEquals("."))
+                if (now.getContent().equals("."))
                 {
                     if (newList.isEmpty()||(!iterator.hasNext()))
                         TokenizeError.throwFloatPointError(now);

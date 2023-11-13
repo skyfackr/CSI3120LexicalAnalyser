@@ -41,6 +41,28 @@ class NoviceLScannerTest {
     }
 
     @Test
+    void getNextWithUnclosedLiteral()
+    {
+        try {
+            tester=LScannerFactory.createScanner((new BufferedReader(new StringReader("\"good"))));
+            ILexeme lexeme;
+            int countdown=100;
+            do {
+                lexeme=tester.getNext();
+                System.out.println(lexeme);
+                countdown--;
+                if (countdown<=0) fail("loop time out");
+            }while (lexeme.getLexemeType()!=LexemeType.EOF);
+            fail("should throw error");
+        }
+        catch (LexemeScannerException e)
+        {
+            System.out.println(e.getMessage());
+            assertEquals("Error - unclosed string literal",e.getMessage());
+        }
+    }
+
+    @Test
     void getNextWithComment() {
     }
 
