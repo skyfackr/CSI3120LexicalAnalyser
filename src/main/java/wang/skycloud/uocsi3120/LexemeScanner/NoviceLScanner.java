@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class NoviceLScanner implements LScanner{
     private final BufferedReader reader;
-    private String currentLine;
+    private String currentLine="";
     private int lineCount=1;
 
     NoviceLScanner(BufferedReader reader) {
@@ -79,32 +79,55 @@ public class NoviceLScanner implements LScanner{
         }
         if (firstChar == '/') {
             if (currentLine.charAt(1) == '/') {
-                return LScannerFactory.createLexemeUnit(currentLine, lineCount, LexemeType.commentLine);
+                String cache=new String(currentLine);
+                truncLine(currentLine.length());
+                return LScannerFactory.createLexemeUnit(cache, lineCount, LexemeType.commentLine);
             }
             if (currentLine.charAt(1) == '*') {
                 return readCommentBlock();
             }
         }
+        if (firstChar==';'){
+            truncLine(1);
+            return LScannerFactory.createLexemeUnit(String.valueOf(firstChar), lineCount, LexemeType.semicolon);
+        }
         charType currentType=getCharType(firstChar);
         if (currentLine.length()==1){
             truncLine(1);
-            return (currentType==charType.other)?LScannerFactory.createLexemeUnit(String.valueOf(firstChar), lineCount, LexemeType.operator):LScannerFactory.createLexemeUnit(String.valueOf(firstChar), lineCount, LexemeType.literal);
+            return createUnit(String.valueOf(firstChar));
         }
         StringBuilder sb = new StringBuilder();
         sb.append(firstChar);
         int index=1;
-        while(currentLine.charAt(index)!=' '&&getCharType(currentLine.charAt(index))!=currentType)
+        while(currentLine.charAt(index)!=' '&&getCharType(currentLine.charAt(index))==currentType)
         {
+            if (currentLine.charAt(index)==';')
+            {
+                break;
+            }
             sb.append(currentLine.charAt(index));
             index++;
             if(index==currentLine.length())
             {
                 truncLine(index);
-                return (currentType==charType.other)?LScannerFactory.createLexemeUnit(sb.toString(), lineCount, LexemeType.operator):LScannerFactory.createLexemeUnit(sb.toString(), lineCount, LexemeType.literal);
+                return createUnit(sb.toString());
             }
         }
         truncLine(index);
-        return (currentType==charType.other)?LScannerFactory.createLexemeUnit(sb.toString(), lineCount, LexemeType.operator):LScannerFactory.createLexemeUnit(sb.toString(), lineCount, LexemeType.literal);
+        return createUnit(sb.toString());
+    }
+    private ILexeme createUnit(String content)
+    {
+        charType type=getCharType(content.charAt(0));
+        if (type!=charType.other)
+        {
+            return LScannerFactory.createLexemeUnit(content, lineCount, LexemeType.literal);
+        }
+        if (content.equals(";"))
+        {
+            return LScannerFactory.createLexemeUnit(content, lineCount, LexemeType.semicolon);
+        }
+        return LScannerFactory.createLexemeUnit(content, lineCount, LexemeType.operator);
     }
     enum charType{
         letter,
@@ -167,10 +190,10 @@ public class NoviceLScanner implements LScanner{
 
     @Override
     public ILexeme getNext() {
-        ILexeme lexeme;
-        while ((lexeme = this.readLexeme()).getLexemeType() == LexemeType.commentBlock || lexeme.getLexemeType() == LexemeType.commentLine) {
+        ILexeme lexeme= this.getNextWithComment();
+        while (lexeme.getLexemeType() == LexemeType.commentBlock || lexeme.getLexemeType() == LexemeType.commentLine) {
             //skip comment
-            continue;
+            lexeme=this.getNextWithComment();
         }
         return lexeme;
     }
@@ -185,4 +208,6 @@ public class NoviceLScanner implements LScanner{
     public ILexeme getCurrent() {
         return lastReturned;
     }
+
+
 }

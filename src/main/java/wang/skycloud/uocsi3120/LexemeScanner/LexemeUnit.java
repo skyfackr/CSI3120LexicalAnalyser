@@ -28,4 +28,8 @@ public class LexemeUnit implements ILexeme{
     public LexemeType getLexemeType() {
         return LexemeType;
     }
+    @Override
+    public String toString() {
+        return String.format("NoviceLScanner{line=%d, type=%s, content=%s}", line, LexemeType, content);
+    }
 }
