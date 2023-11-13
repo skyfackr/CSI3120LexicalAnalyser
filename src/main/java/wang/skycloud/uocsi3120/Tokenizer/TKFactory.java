@@ -19,8 +19,25 @@ public class TKFactory {
         //GeneralTokenizer general=new GeneralTokenizer();
         //SeparatorTokenizer separator=new SeparatorTokenizer();
         Iterable<ILexeme> lexemesWithFloat=findFloatLexeme(lexeme);
-        //TODO: tokenize not implemented created at 2023/11/13 1:34
-        throw new RuntimeException("tokenize not implemented");
+        ITokenizer general,literal,separator;
+        general=new GeneralTokenizer();
+        literal=new LiteralTokenizer();
+        separator=new SeparatorTokenizer();
+        ArrayList<IToken> ans=new ArrayList<>();
+        for (ILexeme l:lexemesWithFloat)
+        {
+            switch(l.getLexemeType()){
+                case literal:
+                    ans.add(literal.tokenize(l));
+                    break;
+                case separator:
+                    ans.add(separator.tokenize(l));
+                    break;
+                default:
+                    ans.add(general.tokenize(l));
+            }
+        }
+        return ans;
     }
     private static ILexeme combineFloatLexeme(ILexeme first,ILexeme point, ILexeme last) {
         if (!(first.getContent().chars().allMatch(Character::isDigit) && last.getContent().chars().allMatch(Character::isDigit)&&first.getLine()==last.getLine()))
