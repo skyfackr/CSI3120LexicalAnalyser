@@ -6,7 +6,7 @@ import java.io.IOException;
 public class NoviceLScanner implements LScanner{
     private final BufferedReader reader;
     private String currentLine="";
-    private int lineCount=1;
+    private int lineCount=0;
 
     NoviceLScanner(BufferedReader reader) {
         this.reader = reader;
@@ -163,6 +163,7 @@ public class NoviceLScanner implements LScanner{
 
             try {
                 nextLine = reader.readLine();
+                lineCount++;
             } catch (IOException e) {
                 LexemeScannerException.throwIOException(e);
             }
@@ -172,7 +173,7 @@ public class NoviceLScanner implements LScanner{
             nextLine = nextLine.trim();
         } while (nextLine.isEmpty());
         currentLine = nextLine;
-        lineCount++;
+
         return currentLine;
     }
 
