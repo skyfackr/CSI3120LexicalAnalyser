@@ -7,7 +7,7 @@ public class LexemeUnit implements ILexeme{
     private final int line;
     private final LexemeType LexemeType;
 
-    public LexemeUnit(String content, int line, LexemeType LexemeType) {
+    LexemeUnit(String content, int line, LexemeType LexemeType) {
         this.content = content;
         this.line = line;
         this.LexemeType = LexemeType;
