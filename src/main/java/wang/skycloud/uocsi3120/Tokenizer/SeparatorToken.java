@@ -17,4 +17,8 @@ public class SeparatorToken extends GeneralToken{
     public Side getSide() {
         return side;
     }
+    @Override
+    public String toString() {
+        return String.format("TOKEN{Type=%s, Line=%d, Content=%s, Separator=%s.%s}", getType(), getLine(),getContent(), separator, side);
+    }
 }

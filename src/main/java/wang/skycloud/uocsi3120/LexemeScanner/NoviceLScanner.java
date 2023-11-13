@@ -104,8 +104,10 @@ public class NoviceLScanner implements LScanner{
         StringBuilder sb = new StringBuilder();
         sb.append(firstChar);
         int index=1;
-        while(currentLine.charAt(index)!=' '&&getCharType(currentLine.charAt(index))==currentType)
+        while((currentLine.charAt(index)!=' '&&getCharType(currentLine.charAt(index))==currentType)||
+                (currentType==charType.letter&&currentLine.charAt(index)=='_'))
         {
+            
             if (";(){}[]".indexOf(currentLine.charAt(index))!=-1)
             {
                 break;

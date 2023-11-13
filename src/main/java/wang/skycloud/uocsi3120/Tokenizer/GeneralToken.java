@@ -1,6 +1,6 @@
 package wang.skycloud.uocsi3120.Tokenizer;
 
-public class GeneralToken implements IToken{
+public class GeneralToken extends ITokenWithToString{
     private final TokenType type;
     private final String content;
     private final int line;

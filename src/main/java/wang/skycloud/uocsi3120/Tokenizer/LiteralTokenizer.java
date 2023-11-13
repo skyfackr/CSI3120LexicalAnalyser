@@ -20,7 +20,7 @@ public class LiteralTokenizer implements ITokenizer{
     }
     //private Set<String> identifierSet=new HashSet<>();
     private static final String[] keywords = new String[]{
-            "if", "else", "while", "for", "break", "continue", "return", "int", "float", "void", "string", "bool", "true", "false","in"
+            "if", "else", "while", "for", "break", "continue", "return", "int", "float", "void", "String", "bool", "true", "false","in"
     };
     private boolean isFloat(String s) {
         try {
