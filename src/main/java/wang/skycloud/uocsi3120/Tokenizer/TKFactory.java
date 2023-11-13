@@ -16,6 +16,9 @@ public class TKFactory {
      * @return tokenized token
      */
     public static Iterable<IToken> tokenize(Iterable<ILexeme> lexeme) {
+        //GeneralTokenizer general=new GeneralTokenizer();
+        //SeparatorTokenizer separator=new SeparatorTokenizer();
+        Iterable<ILexeme> lexemesWithFloat=findFloatLexeme(lexeme);
         //TODO: tokenize not implemented created at 2023/11/13 1:34
         throw new RuntimeException("tokenize not implemented");
     }
