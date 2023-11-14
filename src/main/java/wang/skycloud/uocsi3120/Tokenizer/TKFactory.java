@@ -33,6 +33,9 @@ public class TKFactory {
                 case separator:
                     ans.add(separator.tokenize(l));
                     break;
+                case operator:// Not set the tokenizer. included in constructor
+                    ans.add(new OperatorToken(TokenType.OPERATOR,l.getContent(),l.getLine()));
+                    break;
                 default:
                     ans.add(general.tokenize(l));
             }

@@ -22,8 +22,8 @@ public class GeneralTokenizer implements ITokenizer{
             case semicolon:
                 return new GeneralToken(TokenType.SEMICOLON,lexeme.getContent(),lexeme.getLine());
 
-            case operator:
-                return new GeneralToken(TokenType.OPERATOR,lexeme.getContent(),lexeme.getLine());
+            /*case operator:
+                return new GeneralToken(TokenType.OPERATOR,lexeme.getContent(),lexeme.getLine());*/
 
         }
         throw new RuntimeException("unreachable");
