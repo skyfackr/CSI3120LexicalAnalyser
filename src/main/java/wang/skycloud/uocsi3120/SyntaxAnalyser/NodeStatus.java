@@ -28,7 +28,7 @@ public abstract class NodeStatus {
     {
         if (nextAllowed.containsKey(nextStatus.getCode()))
         {
-            return generateAdd(nextStatus);
+            return generateAdd(StatusGenerator.generate(nextAllowed.get(nextStatus.getCode())));
         }
         else if (deleteWhen.contains(nextStatus.getCode()))
         {
@@ -36,7 +36,7 @@ public abstract class NodeStatus {
         }
         else if (changedWhen.containsKey(nextStatus.getCode()))
         {
-            return generateReplace(nextStatus);
+            return generateReplace(StatusGenerator.generate(changedWhen.get(nextStatus.getCode())));
         }
         customError();
         throw new RuntimeException("unreachable");

@@ -141,6 +141,22 @@ public class StatusList {
             code = "separator_bracket_left";
         }
     }
+    static class separator_parent_left extends NodeStatus
+    {
+        @Override
+        protected void customError() {
+            throw new RuntimeException("missing \")\"");
+        }
+
+        separator_parent_left() {
+            updateNextAllowed(Map.of());
+            updateChangedWhen(Map.of());
+            updateDeleteWhen(Set.of(
+                    "separator_parent_right"
+            ));
+            code = "separator_parent_left";
+        }
+    }
 
     static class assignment_wait_right extends NodeStatus {
         @Override
@@ -550,7 +566,11 @@ public class StatusList {
         general(String code)
         {
             this.code=code;
+            updateNextAllowed(Map.of());
+            updateChangedWhen(Map.of());
+            updateDeleteWhen(Set.of());
         }
+
     }
 }
 

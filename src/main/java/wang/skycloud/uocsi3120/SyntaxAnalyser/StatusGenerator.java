@@ -110,7 +110,7 @@ public class StatusGenerator {
                         switch (((SeparatorToken)token).getSide())
                         {
                             case Left:
-                                return new StatusList.separator_bracket_left();
+                                return new StatusList.separator_parent_left();
                             case Right:
                                 return new StatusList.general("separator_parent_right");
                         }
