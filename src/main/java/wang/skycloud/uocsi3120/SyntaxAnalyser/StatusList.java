@@ -541,5 +541,16 @@ public class StatusList {
             code="EOF";
         }
     }
+    static class general extends NodeStatus
+    {
+        @Override
+        protected void customError() {
+            throw new RuntimeException("Something missing");
+        }
+        general(String code)
+        {
+            this.code=code;
+        }
+    }
 }
 

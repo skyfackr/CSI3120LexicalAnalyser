@@ -1,19 +1,41 @@
 package wang.skycloud.uocsi3120;
 
+import wang.skycloud.uocsi3120.LexemeScanner.ILexeme;
+import wang.skycloud.uocsi3120.LexemeScanner.LScanner;
+import wang.skycloud.uocsi3120.LexemeScanner.LScannerFactory;
+import wang.skycloud.uocsi3120.LexemeScanner.LexemeType;
+import wang.skycloud.uocsi3120.SyntaxAnalyser.SAFactory;
+import wang.skycloud.uocsi3120.Tokenizer.IToken;
+import wang.skycloud.uocsi3120.Tokenizer.TKFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
 // 按两次 Shift 打开“随处搜索”对话框并输入 `show whitespaces`，
 // 然后按 Enter 键。现在，您可以在代码中看到空格字符。
 public class Main {
     public static void main(String[] args) {
-        // 当文本光标位于高亮显示的文本处时按 Alt+Enter，
-        // 可查看 IntelliJ IDEA 对于如何修正该问题的建议。
-        System.out.printf("Hello and welcome!");
-
-        // 按 Shift+F10 或点击装订区域中的绿色箭头按钮以运行脚本。
-        for (int i = 1; i <= 5; i++) {
-
-            // 按 Shift+F9 开始调试代码。我们已为您设置了一个断点，
-            // 但您始终可以通过按 Ctrl+F8 添加更多断点。
-            System.out.println("i = " + i);
+        //arg1: input file
+        if (args.length != 1) {
+            System.out.println("Usage: java -jar Analyser.jar <input file> ");
+            return;
         }
+        String input=args[0];
+
+        LScanner scanner = LScannerFactory.createScanner(input);
+        List<ILexeme> lexemes=new ArrayList<>();
+        do {
+            lexemes.add(scanner.getNext());
+        }while (scanner.getCurrent().getLexemeType()!= LexemeType.EOF);
+        Iterable<IToken> tokens= TKFactory.tokenize(lexemes);
+        try {
+            SAFactory.analyze(tokens);
+        }catch (RuntimeException e)
+        {
+            System.out.println("Syntax analysis failed.");
+            return;
+        }
+        System.out.println("Syntax analysis succeed.");
+
     }
 }
